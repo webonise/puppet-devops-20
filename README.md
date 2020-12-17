@@ -22,11 +22,11 @@ Modify the manifest environments/test/manifests/site.pp to -
 
 5. Test the puppet code using vagrant and resolve issues if any (Vagrantfile is present in the repo).
 
-6. Write a script for the below problem statement.
+6. Write a script for the below problem statement, and include that script file in scripts folder/directory. 
 
    Problem Statement : 
 	
-	Find file 'new_image.json' under the folder 'scripts', use it as supplied JSON file, write a script in a language of your choice that takes 3 parameters from the user:
+	Find file 'new_image.json' under the folder/directory 'scripts', use that file as supplied JSON file, write a script in a language of your choice that takes 3 parameters from the user:
 
         1. A number that represents how long the file should stay in the bucket, after which it is deleted. Let’s call this the number of “retention_days”
         2. A prefix string for object name
