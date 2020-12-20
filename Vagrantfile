@@ -19,8 +19,8 @@ Vagrant.configure(2) do |config|
 
     sudo apt-get install wget --assume-yes;
     sudo rm *.deb
-    sudo wget https://apt.puppetlabs.com/puppetlabs-release-pc1-`grep -i codename /etc/lsb-release | cut -d= -f2`.deb;
-    sudo dpkg -i puppetlabs-release-pc1-`grep -i codename /etc/lsb-release | cut -d= -f2`.deb;
+    sudo wget https://apt.puppetlabs.com/puppetlabs-release-pc1-'grep -i codename /etc/lsb-release | cut -d= -f2'.deb;
+    sudo dpkg -i puppetlabs-release-pc1-'grep -i codename /etc/lsb-release | cut -d= -f2'.deb;
     sudo apt-get update;
     sudo apt-get install puppet-agent --assume-yes
     sudo apt-mark hold puppet-agent
