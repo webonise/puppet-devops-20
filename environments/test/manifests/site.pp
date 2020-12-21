@@ -1,6 +1,6 @@
 node "test-site" {
 
-  file { ['/var/www']:
+  file { ['/var/www/test-app', '/var/www/test-ap/current', '/var/www/test-app/releases', '/var/www/test-app/shared' ]:
     ensure => 'directory',
     owner   => root,
     group   => root,
