@@ -1,6 +1,6 @@
 node "test-site" {
 
-  file { ['/var/www']:
+  file { ['/var/www', '/var/www/test-app', '/var/www/test-app/current', '/var/www/test-app/releases', '/var/www/test-app/shared']:
     ensure => 'directory',
     owner   => root,
     group   => root,
@@ -54,6 +54,7 @@ node "test-site" {
     ensure               => present,
     use_default_location => false,
     www_root             => "/var/www/test-app/current/",
+    worker_processes     => 2,
   }
 
   nginx::resource::location {"/":
@@ -61,6 +62,13 @@ node "test-site" {
     ensure                => present,
     www_root             => "/var/www/test-app/current/",
     priority              => 401,
+  }
+
+  nginx::resource::location {'~* ^.+\.(jpg|jpeg|gif)$':
+    server                => "$server_name",
+    expires               => "30d",
+    ensure                => present,
+    www_root              => "/var/www/test-app/current/",
   }
 
 }
