@@ -1,5 +1,5 @@
 
-  file { ['/var/www']:
+  file { '/var/www':
     ensure => 'directory',
     owner   => root,
     group   => root,
@@ -13,14 +13,14 @@
     group   => root,
     mode    => '755'
   }
-    file { ['/var/www/test-app/releases']:
+    file {'/var/www/test-app/releases':
     ensure => 'directory',
     owner   => root,
     group   => root,
     mode    => '755'
   }
   
-  file { ['/var/www/test-app/shared']:
+  file {'/var/www/test-app/shared':
     ensure => 'directory',
     owner   => root,
     group   => root,
