@@ -1,0 +1,68 @@
+pwd
+/opt
+sudo mkdir  certificates
+Create the certificates directory
+cd certificates
+sudo nano example.com.conf
+	[req]
+default_bits       = 2048
+default_keyfile    = example.com.key
+distinguished_name = req_distinguished_name
+req_extensions     = req_ext
+x509_extensions    = v3_ca
+
+[req_distinguished_name]
+countryName                 = Country Name (2 letter code)
+countryName_default         = US
+stateOrProvinceName         = State or Province Name (full name)
+stateOrProvinceName_default = New York
+localityName                = Locality Name (eg, city)
+localityName_default        = Rochester
+organizationName            = Organization Name (eg, company)
+organizationName_default    = example.com
+organizationalUnitName      = organizationalunit
+organizationalUnitName_default = Development
+commonName                  = Common Name (e.g. server FQDN or YOUR name)
+commonName_default          = example.com
+commonName_max              = 64
+
+[req_ext]
+subjectAltName = @alt_names
+
+[v3_ca]
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1   = example.com
+DNS.2   = 127.0.0.1
+
+# Create the Certificate using OpenSSL
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout example.com.key -out example.com.crt  -config example.com.conf
+# Copy the public key to the /etc/ssl/certs directory
+sudo cp example.com.crt /etc/ssl/certs/example.com.crt
+# Copy the private key to the /etc/ssl/private directory
+sudo cp example.com.key /etc/ssl/private/example.com.key
+# Update the Nginx Configuration File to Load the Certificate Key Pair
+sudo nano /etc/nginx/sites-available/default
+server {
+        listen 80;
+        listen 443 ssl http2;
+        listen [::]:443 ssl http2;
+        server_name example.com;
+
+        ssl_certificate /etc/ssl/certs/example.com.crt;
+        ssl_certificate_key /etc/ssl/private/example.com.key;
+        
+        ssl_protocols TLSv1.2 TLSv1.1 TLSv1;
+
+        root /var/www/html;
+
+        index index.html index.nginx-debian.html;
+}
+
+
+sudo service nginx reload
+#Click proceed to Localhost to verify that Nginx is correctly configured
+certutil
+sudo apt install libnss3-tools
+certutil -d sql:$HOME/.pki/nssdb -A -t "P,," -n "example.com" -i example.com.crt
